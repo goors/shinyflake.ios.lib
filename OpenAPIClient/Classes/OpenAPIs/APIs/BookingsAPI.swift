@@ -20,7 +20,7 @@ open class BookingsAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func bookingsCreateBooking(start: Date? = nil, end: Date? = nil, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: Bool, _ error: Error?) -> Void)) -> RequestTask {
+    open class func bookingsCheckIfDateIsAvailable(start: Date? = nil, end: Date? = nil, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: Bool, _ error: Error?) -> Void)) -> RequestTask {
     // open class func bookingsCheckIfDateIsAvailable(start: Date? = nil, end: Date? = nil, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: Bool, _ error: Error?) -> Void)) -> RequestTask {
         return bookingsCheckIfDateIsAvailableWithRequestBuilder(start: start, end: end).execute(apiResponseQueue) { result in
             switch result {
