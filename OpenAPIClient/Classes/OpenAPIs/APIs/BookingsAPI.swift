@@ -20,13 +20,14 @@ open class BookingsAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func bookingsCheckIfDateIsAvailable(start: Date? = nil, end: Date? = nil, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func bookingsCreateBooking(start: Date? = nil, end: Date? = nil, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: Bool, _ error: Error?) -> Void)) -> RequestTask {
+    // open class func bookingsCheckIfDateIsAvailable(start: Date? = nil, end: Date? = nil, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: Bool, _ error: Error?) -> Void)) -> RequestTask {
         return bookingsCheckIfDateIsAvailableWithRequestBuilder(start: start, end: end).execute(apiResponseQueue) { result in
             switch result {
-            case .success:
-                completion((), nil)
+            case let .success(response):
+                completion(response.body, nil)
             case let .failure(error):
-                completion(nil, error)
+                completion(false, error)
             }
         }
     }
@@ -40,7 +41,7 @@ open class BookingsAPI {
      - parameter end: (query)  (optional)
      - returns: RequestBuilder<Void> 
      */
-    open class func bookingsCheckIfDateIsAvailableWithRequestBuilder(start: Date? = nil, end: Date? = nil) -> RequestBuilder<Void> {
+    open class func bookingsCheckIfDateIsAvailableWithRequestBuilder(start: Date? = nil, end: Date? = nil) -> RequestBuilder<Bool> {
         let localVariablePath = "/api/v2.0/Bookings/Query/Date"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
@@ -57,7 +58,7 @@ open class BookingsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = OpenAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Bool>.Type = OpenAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
 
         return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
