@@ -55,12 +55,34 @@ open class BookingsAPI {
         let localVariableNillableHeaders: [String: Any?] = [
             :
         ]
-
+        
+        
+        
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Bool>.Type = OpenAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<Bool>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+        var d = localVariableRequestBuilder
+            .init(
+                method: "PUT",
+                URLString: (localVariableUrlComponents?.string ?? localVariableURLString),
+                parameters: localVariableParameters,
+                headers: localVariableHeaderParameters,
+                requiresAuthentication: true
+            )
+        
+        return d;
+        
+        
+        
+        
+        
+
+        // let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+       //  let localVariableRequestBuilder: RequestBuilder<Bool>.Type = OpenAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+
+        // return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**

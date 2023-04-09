@@ -27,7 +27,13 @@ let package = Package(
         .target(
             name: "ShinyFlakeApiClient",
             dependencies: ["AnyCodable", ],
-            path: "OpenAPIClient/Classes"
+            path: "OpenAPIClient/Classes",
+            swiftSettings: [.unsafeFlags(["-enable-testing"])]
+        ),
+        .testTarget(
+            name: "ShinyFlakeApiClientTests",
+            dependencies: ["ShinyFlakeApiClient"],
+            path: "Tests/"
         ),
     ]
 )
