@@ -44,7 +44,7 @@ final class ShinyFlakeTests: XCTestCase {
         let expectation = self.expectation(description: "Scaling")
         var res: Bool?
         
-        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "sofija2501")) { data, error in
+        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "")) { data, error in
             
             
             
