@@ -19,15 +19,7 @@ final class ShinyFlakeTests: XCTestCase {
     }
 
     func testBookingsCheckIfDateIsAvailable() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-        // BookingsAPI.bookingsGetBookedDates { data, error in
-            
-        // }
-        
+
         let expectation = self.expectation(description: "Scaling")
         var res: Bool?
         BookingsAPI.bookingsCheckIfDateIsAvailable(start: Date(), end: Date(), completion: { data, error in
@@ -38,18 +30,53 @@ final class ShinyFlakeTests: XCTestCase {
             expectation.fulfill()
             
             res = data
-            
-            // XCTAssertEqual(data, true)
+
         })
         
         waitForExpectations(timeout: 5, handler: nil)
 
         XCTAssertEqual(res, true)
+       
+    }
+    
+    func testGetUserProfile() throws {
+
+        let expectation = self.expectation(description: "Scaling")
+        var res: Bool?
+        
+        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "sofija2501")) { data, error in
+            
+            
+            
+            let jsonData = data?.stringValue.data(using: .utf8)!
+            let blogPost: String = try! JSONDecoder().decode(String.self, from: jsonData!)
+    
+            
+            // let d = data?.stringValue.javaScriptEscapedString()
+
+            OpenAPIClientAPI.customHeaders["Authorization"] = "Bearer " + blogPost
+            
+            AuthUserAPI.authUserGetProfile { data, error in
+                
+                guard error == nil else {
+                    
+                    XCTFail(error.debugDescription)
+                   
+                    return
+                }
+
+                expectation.fulfill()
+                
+                res = (data != nil)
+            }
+            
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+        XCTAssertEqual(res, true)
         
         
-        // BookingsAPI.bookingsCheckIfDateIsAvailable(start: Date(), end: Date()) { data, error in
-        //     print(data)
-        // }
+       
     }
 
     func testPerformanceExample() throws {
@@ -60,3 +87,20 @@ final class ShinyFlakeTests: XCTestCase {
     }
 
 }
+                                                           extension String
+                                                           {
+                                                               func javaScriptEscapedString() -> String
+                                                               {
+                                                                   // Because JSON is not a subset of JavaScript, the LINE_SEPARATOR and PARAGRAPH_SEPARATOR unicode
+                                                                   // characters embedded in (valid) JSON will cause the webview's JavaScript parser to error. So we
+                                                                   // must encode them first. See here: http://timelessrepo.com/json-isnt-a-javascript-subset
+                                                                   // Also here: http://media.giphy.com/media/wloGlwOXKijy8/giphy.gif
+                                                                   let str = self.replacingOccurrences(of: "\u{2028}", with: "\\u2028")
+                                                                                 .replacingOccurrences(of: "\u{2029}", with: "\\u2029")
+                                                                   // Because escaping JavaScript is a non-trivial task (https://github.com/johnezang/JSONKit/blob/master/JSONKit.m#L1423)
+                                                                   // we proceed to hax instead:
+                                                                   let data = try! JSONSerialization.data(withJSONObject:[str], options: [])
+                                                                   let encodedString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
+                                                                   return encodedString.substring(with: NSMakeRange(1, encodedString.length - 2))
+                                                               }
+                                                           }

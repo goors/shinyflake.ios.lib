@@ -14,15 +14,22 @@ public struct UserBookingResponse: Codable, JSONEncodable, Hashable {
 
     public var bookingId: String?
     public var redirectUrl: String?
+    public var paymentIntentId: String?
 
-    public init(bookingId: String? = nil, redirectUrl: String? = nil) {
+    public init(
+        bookingId: String? = nil,
+        redirectUrl: String? = nil,
+        paymentIntentId: String? = nil
+    ) {
         self.bookingId = bookingId
         self.redirectUrl = redirectUrl
+        self.paymentIntentId = paymentIntentId
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case bookingId
         case redirectUrl
+        case paymentIntentId
     }
 
     // Encodable protocol methods
@@ -31,6 +38,7 @@ public struct UserBookingResponse: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(bookingId, forKey: .bookingId)
         try container.encodeIfPresent(redirectUrl, forKey: .redirectUrl)
+        try container.encodeIfPresent(paymentIntentId, forKey: .paymentIntentId)
     }
 }
 
