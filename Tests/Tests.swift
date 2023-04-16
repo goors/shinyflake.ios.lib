@@ -68,7 +68,7 @@ final class ShinyFlakeTests: XCTestCase {
 
                 expectation.fulfill()
                 
-                res = (data != nil)
+                res = (data != nil && data?.deviceIdIos != nil)
             }
             
         }

@@ -26,6 +26,9 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
     public var hasStripeProfile: Bool?
     public var stripeId: String?
     public var title: String?
+    public var deviceIdAndroid: String?
+    public var deviceIdIos: String?
+    public var deviceIdDesktop: String?
 
     public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, email: String, firstName: String? = nil, lastname: String? = nil, emailConfirmed: Bool? = nil, hasStripeCards: Bool? = nil, hasStripeProfile: Bool? = nil, stripeId: String? = nil, title: String? = nil) {
         self.id = id
@@ -53,6 +56,10 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
         case hasStripeProfile
         case stripeId
         case title
+        case deviceIdAndroid
+        case deviceIdIos
+        case deviceIdDesktop
+        
     }
 
     // Encodable protocol methods
@@ -70,6 +77,9 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(hasStripeProfile, forKey: .hasStripeProfile)
         try container.encodeIfPresent(stripeId, forKey: .stripeId)
         try container.encodeIfPresent(title, forKey: .title)
+        try container.encodeIfPresent(deviceIdAndroid, forKey: .deviceIdAndroid)
+        try container.encodeIfPresent(deviceIdIos, forKey: .deviceIdIos)
+        try container.encodeIfPresent(deviceIdDesktop, forKey: .deviceIdDesktop)
     }
 }
 
