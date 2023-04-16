@@ -41,6 +41,7 @@ final class ShinyFlakeTests: XCTestCase {
     
     func testGetUserProfile() throws {
 
+        OpenAPIClientAPI.basePath = "http://localhost:5000"
         let expectation = self.expectation(description: "Scaling")
         var res: Bool?
         
@@ -77,6 +78,43 @@ final class ShinyFlakeTests: XCTestCase {
         
         
        
+    }
+    
+    func testUpdateUserDeviceId() throws {
+        
+        OpenAPIClientAPI.basePath = "http://localhost:5000"
+        let expectation = self.expectation(description: "Scaling")
+        var res: Bool?
+        
+        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "")) { data, error in
+            
+            let jsonData = data?.stringValue.data(using: .utf8)!
+            let blogPost: String = try! JSONDecoder().decode(String.self, from: jsonData!)
+    
+            
+            // let d = data?.stringValue.javaScriptEscapedString()
+
+            OpenAPIClientAPI.customHeaders["Authorization"] = "Bearer " + blogPost
+            
+            let model = UserUpdateDeviceId(deviceId: "123", deviceType: UserDeviceType.Desktop)
+            
+            AuthUserAPI.authUserUpdateDeviceId(userUpdateDeviceId: model) { data1, error in
+                guard error == nil else {
+                    
+                    XCTFail(error.debugDescription)
+                   
+                    return
+                }
+
+                expectation.fulfill()
+                
+                res = (data1 != false)
+            }
+        }
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+        XCTAssertEqual(res, true)
     }
 
     func testPerformanceExample() throws {
