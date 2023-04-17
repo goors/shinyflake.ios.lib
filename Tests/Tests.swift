@@ -116,6 +116,38 @@ final class ShinyFlakeTests: XCTestCase {
 
         XCTAssertEqual(res, true)
     }
+    
+    func testDeleteUser() throws {
+        
+        OpenAPIClientAPI.basePath = "http://localhost:5000"
+        let expectation = self.expectation(description: "Scaling")
+        var res: Bool?
+        
+        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "me@me.com", password: "")) { data, error in
+            
+            let jsonData = data?.stringValue.data(using: .utf8)!
+            let blogPost: String = try! JSONDecoder().decode(String.self, from: jsonData!)
+
+            OpenAPIClientAPI.customHeaders["Authorization"] = "Bearer " + blogPost
+            
+            AuthUserAPI.authUserDeleteAccount(completion: { data1, error in
+                guard error == nil else {
+                    
+                    XCTFail(error.debugDescription)
+                   
+                    return
+                }
+
+                expectation.fulfill()
+                
+                res = (data1 != false)
+            })
+        }
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+        XCTAssertEqual(res, true)
+    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
