@@ -148,6 +148,33 @@ final class ShinyFlakeTests: XCTestCase {
 
         XCTAssertEqual(res, true)
     }
+    
+    func testFindBlogPosts() throws {
+        
+        OpenAPIClientAPI.basePath = "https://api.shinyflake.me"
+        let expectation = self.expectation(description: "Scaling")
+        var res: Bool?
+        
+        BlogPostsAPI.blogPostsFind(blogQuery: BlogQuery(page: 0, pageSize: 10)) { data, error in
+            
+            guard error == nil else {
+                
+                XCTFail(error.debugDescription)
+               
+                return
+            }
+
+            expectation.fulfill()
+            
+            res = (data!.count > 0)
+            
+           
+        }
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+        XCTAssertEqual(res, true)
+    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
@@ -157,20 +184,4 @@ final class ShinyFlakeTests: XCTestCase {
     }
 
 }
-                                                           extension String
-                                                           {
-                                                               func javaScriptEscapedString() -> String
-                                                               {
-                                                                   // Because JSON is not a subset of JavaScript, the LINE_SEPARATOR and PARAGRAPH_SEPARATOR unicode
-                                                                   // characters embedded in (valid) JSON will cause the webview's JavaScript parser to error. So we
-                                                                   // must encode them first. See here: http://timelessrepo.com/json-isnt-a-javascript-subset
-                                                                   // Also here: http://media.giphy.com/media/wloGlwOXKijy8/giphy.gif
-                                                                   let str = self.replacingOccurrences(of: "\u{2028}", with: "\\u2028")
-                                                                                 .replacingOccurrences(of: "\u{2029}", with: "\\u2029")
-                                                                   // Because escaping JavaScript is a non-trivial task (https://github.com/johnezang/JSONKit/blob/master/JSONKit.m#L1423)
-                                                                   // we proceed to hax instead:
-                                                                   let data = try! JSONSerialization.data(withJSONObject:[str], options: [])
-                                                                   let encodedString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
-                                                                   return encodedString.substring(with: NSMakeRange(1, encodedString.length - 2))
-                                                               }
-                                                           }
+                        

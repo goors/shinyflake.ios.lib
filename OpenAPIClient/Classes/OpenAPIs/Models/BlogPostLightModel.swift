@@ -17,14 +17,14 @@ public struct BlogPostLightModel: Codable, JSONEncodable, Hashable {
     public var updatedAt: Date?
     public var title: String
     public var subTitle: String
-    public var text: String
+    public var text: String?
     public var coverPhoto: String
-    public var photos: [BlogPostPhoto]
+    public var photos: [BlogPostPhoto]?
     public var videos: [String]?
     public var location: BlogPostLightModelAllOfLocation
     public var commentsAllowed: Bool
 
-    public init(id: String, createdAt: Date, updatedAt: Date? = nil, title: String, subTitle: String, text: String, coverPhoto: String, photos: [BlogPostPhoto], videos: [String]? = nil, location: BlogPostLightModelAllOfLocation, commentsAllowed: Bool) {
+    public init(id: String, createdAt: Date, updatedAt: Date? = nil, title: String, subTitle: String, text: String? = nil, coverPhoto: String, photos: [BlogPostPhoto]? = nil, videos: [String]? = nil, location: BlogPostLightModelAllOfLocation, commentsAllowed: Bool) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
