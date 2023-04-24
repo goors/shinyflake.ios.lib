@@ -62,7 +62,7 @@ open class BookingsAPI {
 
         let localVariableRequestBuilder: RequestBuilder<Bool>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
 
-        var d = localVariableRequestBuilder
+        let d = localVariableRequestBuilder
             .init(
                 method: "PUT",
                 URLString: (localVariableUrlComponents?.string ?? localVariableURLString),
