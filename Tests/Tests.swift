@@ -149,6 +149,33 @@ final class ShinyFlakeTests: XCTestCase {
         XCTAssertEqual(res, true)
     }
     
+    func testFindAdvventures() throws {
+        
+        OpenAPIClientAPI.basePath = "http://localhost:5000"
+        let expectation = self.expectation(description: "Scaling")
+        var res: Bool?
+        
+        AdventuresAPI.find(blogQuery: BlogQuery(page: 0, pageSize: 10)) { data, error in
+            
+            guard error == nil else {
+                
+                XCTFail(error.debugDescription)
+               
+                return
+            }
+
+            expectation.fulfill()
+            
+            res = (data!.count > 0)
+            
+           
+        }
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+        XCTAssertEqual(res, true)
+    }
+    
     func testFindBlogPosts() throws {
         
         OpenAPIClientAPI.basePath = "https://api.shinyflake.me"
