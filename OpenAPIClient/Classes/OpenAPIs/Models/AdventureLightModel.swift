@@ -23,9 +23,10 @@ public struct AdventureLightModel: Codable, JSONEncodable, Hashable {
     public var photos: [BlogPostPhoto]?
     public var videos: [String]?
     public var altitudes: [Double]?
+    public var start: [Double]?
     public var commentsAllowed: Bool
 
-    public init(id: String, createdAt: Date, updatedAt: Date? = nil, title: String, subTitle: String, text: String? = nil, coverPhoto: String, photos: [BlogPostPhoto]? = nil, videos: [String]? = nil, trekk: String?, altitudes: [Double]?, commentsAllowed: Bool) {
+    public init(id: String, createdAt: Date, updatedAt: Date? = nil, title: String, subTitle: String, text: String? = nil, coverPhoto: String, photos: [BlogPostPhoto]? = nil, videos: [String]? = nil, trekk: String?, altitudes: [Double]?, start: [Double]?, commentsAllowed: Bool) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -38,6 +39,7 @@ public struct AdventureLightModel: Codable, JSONEncodable, Hashable {
         self.trekk = trekk
         self.commentsAllowed = commentsAllowed
         self.altitudes = altitudes
+        self.start = start
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -53,6 +55,7 @@ public struct AdventureLightModel: Codable, JSONEncodable, Hashable {
         case trekk
         case commentsAllowed
         case altitudes
+        case start
     }
 
     // Encodable protocol methods
@@ -71,6 +74,7 @@ public struct AdventureLightModel: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(trekk, forKey: .trekk)
         try container.encodeIfPresent(commentsAllowed, forKey: .commentsAllowed)
         try container.encodeIfPresent(altitudes, forKey: .altitudes)
+        try container.encodeIfPresent(start, forKey: .start)
     }
 }
 
