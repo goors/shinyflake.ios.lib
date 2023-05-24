@@ -25,7 +25,7 @@ public struct AdventureLightModel: Codable, JSONEncodable, Hashable {
     public var altitudes: [Double]?
     public var commentsAllowed: Bool
 
-    public init(id: String, createdAt: Date, updatedAt: Date? = nil, title: String, subTitle: String, text: String? = nil, coverPhoto: String, photos: [BlogPostPhoto]? = nil, videos: [String]? = nil, trekk: String?, altitudes: [Double]? commentsAllowed: Bool) {
+    public init(id: String, createdAt: Date, updatedAt: Date? = nil, title: String, subTitle: String, text: String? = nil, coverPhoto: String, photos: [BlogPostPhoto]? = nil, videos: [String]? = nil, trekk: String?, altitudes: [Double]?, commentsAllowed: Bool) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
