@@ -175,4 +175,30 @@ open class AuthUserAPI {
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
+    
+    
+    open class func updateProfilePhoto(
+        model: Data,
+        completion: @escaping (Data?, URLResponse?, Any?) -> Void
+    ) {
+        
+        updateProfilePhotoWithRequestBuilder(model: model, completionHandler: completion)
+            
+    }
+
+       
+    open class func updateProfilePhotoWithRequestBuilder(
+        model: Data,
+        
+        completionHandler: @escaping (Data?, URLResponse?, Any?) -> Void)
+    {
+        
+            let localVariablePath = "/api/v2.0/AuthUser/Photo"
+            let request = MultipartFormDataRequest(url: URL(string: OpenAPIClientAPI.basePath + localVariablePath)!, headers: OpenAPIClientAPI.customHeaders["Authorization"])
+        
+            request.addDataField(fieldName: "Photo", fileName: "profile.jpeg", data: model, mimeType: "image/jpeg")
+            
+            URLSession.shared.dataTask(with: request, completionHandler: completionHandler).resume()
+            
+    }
 }

@@ -29,8 +29,9 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
     public var deviceIdAndroid: String?
     public var deviceIdIos: String?
     public var deviceIdDesktop: String?
+    public var photoId: String?
 
-    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, email: String, firstName: String? = nil, lastname: String? = nil, emailConfirmed: Bool? = nil, hasStripeCards: Bool? = nil, hasStripeProfile: Bool? = nil, stripeId: String? = nil, title: String? = nil) {
+    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, email: String, firstName: String? = nil, lastname: String? = nil, emailConfirmed: Bool? = nil, hasStripeCards: Bool? = nil, hasStripeProfile: Bool? = nil, stripeId: String? = nil, title: String? = nil, photoId: String? = nil) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -42,6 +43,7 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
         self.hasStripeProfile = hasStripeProfile
         self.stripeId = stripeId
         self.title = title
+        self.photoId = photoId
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -59,6 +61,7 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
         case deviceIdAndroid
         case deviceIdIos
         case deviceIdDesktop
+        case photoId
         
     }
 
@@ -80,6 +83,7 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(deviceIdAndroid, forKey: .deviceIdAndroid)
         try container.encodeIfPresent(deviceIdIos, forKey: .deviceIdIos)
         try container.encodeIfPresent(deviceIdDesktop, forKey: .deviceIdDesktop)
+        try container.encodeIfPresent(photoId, forKey: .photoId)
     }
 }
 

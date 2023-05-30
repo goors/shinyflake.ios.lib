@@ -27,9 +27,16 @@ public struct UserRegistrationModel: Codable, JSONEncodable, Hashable {
     public var hasStripeProfile: Bool?
     public var stripeId: String?
     public var title: String?
+    public var deviceIdAndroid: String?
+    public var deviceIdIos: String?
+    public var deviceIdDekstop: String?
     public var password: String
+    public var photo: Data?
+    public var service: UserService
 
-    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, email: String, firstName: String? = nil, lastname: String? = nil, emailConfirmed: Bool? = nil, hasStripeCards: Bool? = nil, hasStripeProfile: Bool? = nil, stripeId: String? = nil, title: String? = nil, password: String) {
+    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, email: String, firstName: String? = nil, lastname: String? = nil, emailConfirmed: Bool? = nil, hasStripeCards: Bool? = nil, hasStripeProfile: Bool? = nil, stripeId: String? = nil, title: String? = nil, password: String, photo: Data?, service: UserService,
+                deviceIdIos: String? = nil, deviceIdAndroid: String? = nil, deviceIdDekstop: String? = nil
+    ) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -42,6 +49,11 @@ public struct UserRegistrationModel: Codable, JSONEncodable, Hashable {
         self.stripeId = stripeId
         self.title = title
         self.password = password
+        self.photo = photo
+        self.service = service
+        self.deviceIdIos = deviceIdIos
+        self.deviceIdAndroid = deviceIdAndroid
+        self.deviceIdDekstop = deviceIdDekstop
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -57,6 +69,11 @@ public struct UserRegistrationModel: Codable, JSONEncodable, Hashable {
         case stripeId
         case title
         case password
+        case photo
+        case service
+        case deviceIdDekstop
+        case deviceIdAndroid
+        case deviceIdIos
     }
 
     // Encodable protocol methods
@@ -75,6 +92,11 @@ public struct UserRegistrationModel: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(stripeId, forKey: .stripeId)
         try container.encodeIfPresent(title, forKey: .title)
         try container.encode(password, forKey: .password)
+        try container.encode(photo, forKey: .photo)
+        try container.encode(service, forKey: .service)
+        try container.encode(service, forKey: .deviceIdIos)
+        try container.encode(service, forKey: .deviceIdAndroid)
+        try container.encode(service, forKey: .deviceIdDekstop)
     }
 }
 

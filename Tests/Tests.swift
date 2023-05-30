@@ -229,6 +229,125 @@ final class ShinyFlakeTests: XCTestCase {
         XCTAssertEqual(res, true)
     }
     
+    func testRegister() throws {
+        
+        OpenAPIClientAPI.basePath = "http://localhost:5000"
+        let expectation = self.expectation(description: "Scaling")
+        var res: Bool?
+        
+        let image = URL(fileURLWithPath: "/Users/nikola/projects/shinyflake/shinyflake.ios.lib/Tests/1517252093703.jpeg")
+        let d = try Data(contentsOf: image)
+        
+        
+        let model = UserRegistrationModel(
+            email: "nikola@me.com",
+            firstName: "Nikola",
+            lastname: "Derikonjic",
+            title: "Mr",
+            password: "nikola",
+            photo: d,
+            service: UserService.Trekking,
+            deviceIdIos: "123"
+            
+        )
+        
+        AuthAPI.authRegisterV2(model: model, completion: { data, response, error in
+            guard error == nil else {
+                
+                XCTFail(error.debugDescription)
+               
+                return
+            }
+
+            expectation.fulfill()
+            
+            let r = response as? HTTPURLResponse
+            
+            res = r!.statusCode == 200
+        })
+        
+        
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+        XCTAssertEqual(res, true)
+    }
+    
+    
+    func testUpdateProfilePhoto() throws {
+        
+        OpenAPIClientAPI.basePath = "http://localhost:5000"
+        let expectation = self.expectation(description: "Scaling")
+        var res: Bool?
+        
+        let image = URL(fileURLWithPath: "/Users/nikola/projects/shinyflake/shinyflake.ios.lib/Tests/1517252093703.jpeg")
+        let d = try Data(contentsOf: image)
+        
+        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "sofija2501")) { data, error in
+            
+            let jsonData = data?.stringValue.data(using: .utf8)!
+            let blogPost: String = try! JSONDecoder().decode(String.self, from: jsonData!)
+            
+            OpenAPIClientAPI.customHeaders["Authorization"] = "Bearer " + blogPost
+            
+            AuthUserAPI.updateProfilePhoto(model: d, completion: { data, response, error in
+                guard error == nil else {
+                    
+                    XCTFail(error.debugDescription)
+                    
+                    return
+                }
+                
+                expectation.fulfill()
+                
+                let r = response as? HTTPURLResponse
+                print(r!.statusCode)
+                print(r!.url?.description)
+                res = r!.statusCode == 200
+            })
+        }
+        
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+        XCTAssertEqual(res, true)
+    }
+    
+    
+    func testAddDevice() throws {
+        
+        OpenAPIClientAPI.basePath = "http://localhost:5000"
+        let expectation = self.expectation(description: "Scaling")
+        var res: Bool?
+        
+        
+        
+        let model = UserUpdateDeviceId(
+            deviceId: "123",
+            deviceType: UserDeviceType.Ios
+            
+        )
+        
+        AuthAPI.addDevice(deviceModel: model, completion: { data, error in
+            guard error == nil else {
+                
+                XCTFail(error.debugDescription)
+               
+                return
+            }
+
+            expectation.fulfill()
+            
+            res = data == "123"
+        })
+        
+        
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+        XCTAssertEqual(res, true)
+    }
+    
     
 
     func testPerformanceExample() throws {
