@@ -27,15 +27,14 @@ public struct UserRegistrationModel: Codable, JSONEncodable, Hashable {
     public var hasStripeProfile: Bool?
     public var stripeId: String?
     public var title: String?
-    public var deviceIdAndroid: String?
-    public var deviceIdIos: String?
-    public var deviceIdDekstop: String?
+    public var deviceId: String?
+    public var deviceType: UserDeviceType
     public var password: String
     public var photo: Data?
     public var service: UserService
 
     public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, email: String, firstName: String? = nil, lastname: String? = nil, emailConfirmed: Bool? = nil, hasStripeCards: Bool? = nil, hasStripeProfile: Bool? = nil, stripeId: String? = nil, title: String? = nil, password: String, photo: Data?, service: UserService,
-                deviceIdIos: String? = nil, deviceIdAndroid: String? = nil, deviceIdDekstop: String? = nil
+                deviceId: String? = nil, deviceType: UserDeviceType
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -51,9 +50,9 @@ public struct UserRegistrationModel: Codable, JSONEncodable, Hashable {
         self.password = password
         self.photo = photo
         self.service = service
-        self.deviceIdIos = deviceIdIos
-        self.deviceIdAndroid = deviceIdAndroid
-        self.deviceIdDekstop = deviceIdDekstop
+        self.deviceId = deviceId
+        self.deviceType = deviceType
+        
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -71,9 +70,9 @@ public struct UserRegistrationModel: Codable, JSONEncodable, Hashable {
         case password
         case photo
         case service
-        case deviceIdDekstop
-        case deviceIdAndroid
-        case deviceIdIos
+        case deviceId
+        case deviceType
+        
     }
 
     // Encodable protocol methods
@@ -94,9 +93,9 @@ public struct UserRegistrationModel: Codable, JSONEncodable, Hashable {
         try container.encode(password, forKey: .password)
         try container.encode(photo, forKey: .photo)
         try container.encode(service, forKey: .service)
-        try container.encode(service, forKey: .deviceIdIos)
-        try container.encode(service, forKey: .deviceIdAndroid)
-        try container.encode(service, forKey: .deviceIdDekstop)
+        try container.encode(service, forKey: .deviceId)
+        try container.encode(service, forKey: .deviceType)
+        
     }
 }
 

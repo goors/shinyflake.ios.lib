@@ -26,12 +26,13 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
     public var hasStripeProfile: Bool?
     public var stripeId: String?
     public var title: String?
-    public var deviceIdAndroid: String?
-    public var deviceIdIos: String?
-    public var deviceIdDesktop: String?
+    public var deviceId: String?
+    public var deviceType: UserDeviceType
     public var photoId: String?
 
-    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, email: String, firstName: String? = nil, lastname: String? = nil, emailConfirmed: Bool? = nil, hasStripeCards: Bool? = nil, hasStripeProfile: Bool? = nil, stripeId: String? = nil, title: String? = nil, photoId: String? = nil) {
+    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, email: String, firstName: String? = nil, lastname: String? = nil, emailConfirmed: Bool? = nil, hasStripeCards: Bool? = nil, hasStripeProfile: Bool? = nil, stripeId: String? = nil, title: String? = nil, photoId: String? = nil,
+                deviceId: String?, deviceType: UserDeviceType
+    ) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -44,6 +45,8 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
         self.stripeId = stripeId
         self.title = title
         self.photoId = photoId
+        self.deviceId = deviceId
+        self.deviceType = deviceType
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -58,9 +61,8 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
         case hasStripeProfile
         case stripeId
         case title
-        case deviceIdAndroid
-        case deviceIdIos
-        case deviceIdDesktop
+        case deviceId
+        case deviceType
         case photoId
         
     }
@@ -80,9 +82,8 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(hasStripeProfile, forKey: .hasStripeProfile)
         try container.encodeIfPresent(stripeId, forKey: .stripeId)
         try container.encodeIfPresent(title, forKey: .title)
-        try container.encodeIfPresent(deviceIdAndroid, forKey: .deviceIdAndroid)
-        try container.encodeIfPresent(deviceIdIos, forKey: .deviceIdIos)
-        try container.encodeIfPresent(deviceIdDesktop, forKey: .deviceIdDesktop)
+        try container.encodeIfPresent(deviceId, forKey: .deviceId)
+        try container.encodeIfPresent(deviceType, forKey: .deviceType)
         try container.encodeIfPresent(photoId, forKey: .photoId)
     }
 }

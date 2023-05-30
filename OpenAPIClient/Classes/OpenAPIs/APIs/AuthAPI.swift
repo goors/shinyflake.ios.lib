@@ -254,7 +254,8 @@ open class AuthAPI {
             request.addTextField(named: "Email", value: model.email)
             request.addTextField(named: "FirstName", value: model.firstName!)
             request.addTextField(named: "Lastname", value: model.lastname!)
-            request.addTextField(named: "DeviceIdIos", value: model.deviceIdIos!)
+            request.addTextField(named: "DeviceId", value: model.deviceId!)
+        request.addTextField(named: "DeviceType", value: String(model.deviceType.rawValue))
             request.addTextField(named: "Title", value: model.title!)
         
             URLSession.shared.dataTask(with: request, completionHandler: completionHandler).resume()

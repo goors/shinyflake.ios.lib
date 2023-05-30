@@ -68,7 +68,7 @@ final class ShinyFlakeTests: XCTestCase {
 
                 expectation.fulfill()
                 
-                res = (data != nil && data?.deviceIdIos != nil)
+                res = (data != nil && data?.deviceId != nil)
             }
             
         }
@@ -247,7 +247,8 @@ final class ShinyFlakeTests: XCTestCase {
             password: "nikola",
             photo: d,
             service: UserService.Trekking,
-            deviceIdIos: "123"
+            deviceId: "123",
+            deviceType: UserDeviceType.Ios
             
         )
         

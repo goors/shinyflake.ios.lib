@@ -124,7 +124,7 @@ open class AdventuresAPI {
     }
     
     open class func getCategoriesWithRequestBuilder() -> RequestBuilder<[AdventureCategoryLightModel]> {
-        var localVariablePath = "/api/v2.0/Adventures/Options/Categories"
+        let localVariablePath = "/api/v2.0/Adventures/Options/Categories"
         
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
