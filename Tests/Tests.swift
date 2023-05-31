@@ -349,6 +349,56 @@ final class ShinyFlakeTests: XCTestCase {
         XCTAssertEqual(res, true)
     }
     
+    func testUpdateProfile() throws {
+        
+        OpenAPIClientAPI.basePath = "http://localhost:5000"
+        let expectation = self.expectation(description: "Scaling")
+        var res: Bool?
+        
+        let image = URL(fileURLWithPath: "/Users/nikola/projects/shinyflake/shinyflake.ios.lib/Tests/1517252093703.jpeg")
+        let d = try Data(contentsOf: image)
+        
+        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "newpassword")) { data, error in
+            
+            let jsonData = data?.stringValue.data(using: .utf8)!
+            let blogPost: String = try! JSONDecoder().decode(String.self, from: jsonData!)
+            
+            OpenAPIClientAPI.customHeaders["Authorization"] = "Bearer " + blogPost
+            
+            var model = UserModel(
+                email: "nikola@pregmatch.org",
+                firstName: "Nikola first Changed",
+                lastname: "Nikola last Changed",
+                title: "Mr",
+                password: "sofija2501",
+                shareActivities: false,
+                shareProfile: true
+                
+            )
+            
+            AuthUserAPI.update(userModel: model, completion: { data, error in
+                guard error == nil else {
+                    
+                    XCTFail(error.debugDescription)
+                    
+                    return
+                }
+                
+                expectation.fulfill()
+                
+                res == data
+                
+                XCTAssertEqual(res, true)
+                
+            })
+        }
+        
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+        XCTAssertEqual(res, true)
+    }
+    
     
 
     func testPerformanceExample() throws {

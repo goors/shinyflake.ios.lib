@@ -29,8 +29,10 @@ public struct UserModel: Codable, JSONEncodable, Hashable {
     public var role: UserRole?
     public var secret: String?
     public var password: String?
+    public var shareActivities: Bool?
+    public var shareProfile: Bool?
 
-    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, email: String, firstName: String? = nil, lastname: String? = nil, emailConfirmed: Bool? = nil, hasStripeCards: Bool? = nil, hasStripeProfile: Bool? = nil, stripeId: String? = nil, title: String? = nil, role: UserRole? = nil, secret: String? = nil, password: String? = nil) {
+    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, email: String, firstName: String? = nil, lastname: String? = nil, emailConfirmed: Bool? = nil, hasStripeCards: Bool? = nil, hasStripeProfile: Bool? = nil, stripeId: String? = nil, title: String? = nil, role: UserRole? = nil, secret: String? = nil, password: String? = nil, shareActivities: Bool? = nil, shareProfile: Bool? = nil) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -45,6 +47,8 @@ public struct UserModel: Codable, JSONEncodable, Hashable {
         self.role = role
         self.secret = secret
         self.password = password
+        self.shareActivities = shareActivities
+        self.shareProfile = shareProfile
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -62,6 +66,8 @@ public struct UserModel: Codable, JSONEncodable, Hashable {
         case role
         case secret
         case password
+        case shareProfile
+        case shareActivities
     }
 
     // Encodable protocol methods
@@ -82,6 +88,8 @@ public struct UserModel: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(role, forKey: .role)
         try container.encodeIfPresent(secret, forKey: .secret)
         try container.encodeIfPresent(password, forKey: .password)
+        try container.encodeIfPresent(shareActivities, forKey: .shareActivities)
+        try container.encodeIfPresent(shareProfile, forKey: .shareProfile)
     }
 }
 
