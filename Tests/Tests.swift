@@ -284,7 +284,7 @@ final class ShinyFlakeTests: XCTestCase {
         let image = URL(fileURLWithPath: "/Users/nikola/projects/shinyflake/shinyflake.ios.lib/Tests/1517252093703.jpeg")
         let d = try Data(contentsOf: image)
         
-        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "sofija2501")) { data, error in
+        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "")) { data, error in
             
             let jsonData = data?.stringValue.data(using: .utf8)!
             let blogPost: String = try! JSONDecoder().decode(String.self, from: jsonData!)
@@ -355,22 +355,19 @@ final class ShinyFlakeTests: XCTestCase {
         let expectation = self.expectation(description: "Scaling")
         var res: Bool?
         
-        let image = URL(fileURLWithPath: "/Users/nikola/projects/shinyflake/shinyflake.ios.lib/Tests/1517252093703.jpeg")
-        let d = try Data(contentsOf: image)
-        
-        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "newpassword")) { data, error in
+        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "")) { data, error in
             
             let jsonData = data?.stringValue.data(using: .utf8)!
             let blogPost: String = try! JSONDecoder().decode(String.self, from: jsonData!)
             
             OpenAPIClientAPI.customHeaders["Authorization"] = "Bearer " + blogPost
             
-            var model = UserModel(
+            let model = UserModel(
                 email: "nikola@pregmatch.org",
-                firstName: "Nikola first Changed",
-                lastname: "Nikola last Changed",
-                title: "Mr",
-                password: "sofija2501",
+                firstName: "Nikola",
+                lastname: "Nikola Derikonjic",
+                title: "Full time rider!",
+                password: "",
                 shareActivities: false,
                 shareProfile: true
                 
@@ -386,15 +383,13 @@ final class ShinyFlakeTests: XCTestCase {
                 
                 expectation.fulfill()
                 
-                res == data
-                
-                XCTAssertEqual(res, true)
+                res = data
                 
             })
         }
         
         
-        waitForExpectations(timeout: 10.0, handler: nil)
+        waitForExpectations(timeout: 20.0, handler: nil)
 
         XCTAssertEqual(res, true)
     }
