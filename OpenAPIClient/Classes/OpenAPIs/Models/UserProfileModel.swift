@@ -31,9 +31,10 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
     public var photoId: String?
     public var shareActivities: Bool?
     public var shareProfile: Bool?
+    public var syncStatus: Bool?
 
     public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, email: String, firstName: String? = nil, lastname: String? = nil, emailConfirmed: Bool? = nil, hasStripeCards: Bool? = nil, hasStripeProfile: Bool? = nil, stripeId: String? = nil, title: String? = nil, photoId: String? = nil,
-                deviceId: String?, deviceType: UserDeviceType, shareActivities: Bool? = nil, shareProfile: Bool? = nil
+                deviceId: String?, deviceType: UserDeviceType, shareActivities: Bool? = nil, shareProfile: Bool? = nil, syncStatus: Bool? = nil
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -51,6 +52,7 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
         self.deviceType = deviceType
         self.shareActivities = shareActivities
         self.shareProfile = shareProfile
+        self.syncStatus = syncStatus
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -70,6 +72,7 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
         case photoId
         case shareProfile
         case shareActivities
+        case syncStatus
     }
 
     // Encodable protocol methods
@@ -92,6 +95,7 @@ public struct UserProfileModel: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(photoId, forKey: .photoId)
         try container.encodeIfPresent(shareActivities, forKey: .shareActivities)
         try container.encodeIfPresent(shareProfile, forKey: .shareProfile)
+        try container.encodeIfPresent(syncStatus, forKey: .syncStatus)
     }
 }
 
