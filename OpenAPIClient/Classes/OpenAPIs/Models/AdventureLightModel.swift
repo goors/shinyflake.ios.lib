@@ -17,16 +17,18 @@ public struct AdventureLightModel: Codable, JSONEncodable, Hashable {
     public var updatedAt: Date?
     public var title: String
     public var subTitle: String
+    public var category: String?
     public var trekk: String?
     public var text: String?
     public var coverPhoto: String
+    public var level: UserAdventureLevel?
     public var photos: [BlogPostPhoto]?
     public var videos: [String]?
     public var altitudes: [Double]?
     public var start: [Double]?
     public var commentsAllowed: Bool
 
-    public init(id: String, createdAt: Date, updatedAt: Date? = nil, title: String, subTitle: String, text: String? = nil, coverPhoto: String, photos: [BlogPostPhoto]? = nil, videos: [String]? = nil, trekk: String?, altitudes: [Double]?, start: [Double]?, commentsAllowed: Bool) {
+    public init(id: String, createdAt: Date, updatedAt: Date? = nil, title: String, subTitle: String, text: String? = nil, coverPhoto: String, photos: [BlogPostPhoto]? = nil, videos: [String]? = nil, trekk: String?, altitudes: [Double]?, start: [Double]?, commentsAllowed: Bool, category: String? = nil, level: UserAdventureLevel? = nil) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -40,6 +42,8 @@ public struct AdventureLightModel: Codable, JSONEncodable, Hashable {
         self.commentsAllowed = commentsAllowed
         self.altitudes = altitudes
         self.start = start
+        self.category = category
+        self.level = level
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -53,9 +57,11 @@ public struct AdventureLightModel: Codable, JSONEncodable, Hashable {
         case photos
         case videos
         case trekk
+        case category
         case commentsAllowed
         case altitudes
         case start
+        case level
     }
 
     // Encodable protocol methods
@@ -70,7 +76,9 @@ public struct AdventureLightModel: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(text, forKey: .text)
         try container.encodeIfPresent(coverPhoto, forKey: .coverPhoto)
         try container.encodeIfPresent(photos, forKey: .photos)
+        try container.encodeIfPresent(level, forKey: .level)
         try container.encodeIfPresent(videos, forKey: .videos)
+        try container.encodeIfPresent(category, forKey: .category)
         try container.encodeIfPresent(trekk, forKey: .trekk)
         try container.encodeIfPresent(commentsAllowed, forKey: .commentsAllowed)
         try container.encodeIfPresent(altitudes, forKey: .altitudes)

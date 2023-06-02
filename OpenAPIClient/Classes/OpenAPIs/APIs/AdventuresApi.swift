@@ -21,7 +21,7 @@ open class AdventuresAPI {
      - parameter completion: completion handler to receive the data and the error objects
      */
     @discardableResult
-    open class func find(blogQuery: BlogQuery, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: [AdventureLightModel]?, _ error: Error?) -> Void)) -> RequestTask {
+    open class func find(blogQuery: AdventuresQuery, apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: [AdventureLightModel]?, _ error: Error?) -> Void)) -> RequestTask {
         return adventuresFindWithRequestBuilder(blogQuery: blogQuery).execute(apiResponseQueue) { result in
             switch result {
             case let .success(response):
@@ -40,7 +40,7 @@ open class AdventuresAPI {
      - parameter blogQuery: (body)
      - returns: RequestBuilder<[BlogPostLightModel]>
      */
-    open class func adventuresFindWithRequestBuilder(blogQuery: BlogQuery) -> RequestBuilder<[AdventureLightModel]> {
+    open class func adventuresFindWithRequestBuilder(blogQuery: AdventuresQuery) -> RequestBuilder<[AdventureLightModel]> {
         let localVariablePath = "/api/v2.0/Adventures/Query"
         let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
         let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: blogQuery)

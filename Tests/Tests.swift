@@ -155,7 +155,7 @@ final class ShinyFlakeTests: XCTestCase {
         let expectation = self.expectation(description: "Scaling")
         var res: Bool?
         
-        AdventuresAPI.find(blogQuery: BlogQuery(page: 0, pageSize: 10)) { data, error in
+        AdventuresAPI.find(blogQuery: AdventuresQuery(page: 0, pageSize: 10, recommended: true)) { data, error in
             
             guard error == nil else {
                 
@@ -166,7 +166,7 @@ final class ShinyFlakeTests: XCTestCase {
 
             expectation.fulfill()
             
-            res = (data!.count > 0)
+            res = (data!.count == 3)
             
            
         }
@@ -390,6 +390,98 @@ final class ShinyFlakeTests: XCTestCase {
         
         
         waitForExpectations(timeout: 20.0, handler: nil)
+
+        XCTAssertEqual(res, true)
+    }
+    
+    
+    func testGetUserAdventureIds() throws {
+        
+        OpenAPIClientAPI.basePath = "http://localhost:5000"
+        let expectation = self.expectation(description: "Scaling")
+        var res: Bool?
+        
+        
+        
+        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "sofija2501")) { data, error in
+            
+            let jsonData = data?.stringValue.data(using: .utf8)!
+            let blogPost: String = try! JSONDecoder().decode(String.self, from: jsonData!)
+            
+            OpenAPIClientAPI.customHeaders["Authorization"] = "Bearer " + blogPost
+            
+            AuthUserAPI.getAdventureIds(completion: { data, error in
+                guard error == nil else {
+                    
+                    XCTFail(error.debugDescription)
+                    
+                    return
+                }
+                
+                expectation.fulfill()
+                
+                
+                res = data!.count > 0
+            })
+        }
+        
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+        XCTAssertEqual(res, true)
+    }
+    
+    func testAddOrUpdateAdventure() throws {
+        
+        OpenAPIClientAPI.basePath = "http://localhost:5000"
+        let expectation = self.expectation(description: "Scaling")
+        var res: Bool?
+        
+        let image = URL(fileURLWithPath: "/Users/nikola/projects/shinyflake/shinyflake.ios.lib/Tests/1517252093703.jpeg")
+        let d = try Data(contentsOf: image)
+        
+        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "sofija2501")) { data, error in
+            
+            let jsonData = data?.stringValue.data(using: .utf8)!
+            let blogPost: String = try! JSONDecoder().decode(String.self, from: jsonData!)
+            
+            OpenAPIClientAPI.customHeaders["Authorization"] = "Bearer " + blogPost
+            
+            var d1 = UserAdventureModelData(id: UUID(), createdAt: Date(), lng: 19.020118, lat: 43.104688, speed: 123.22)
+            var d2 = UserAdventureModelData(id: UUID(), createdAt: Date(), lng: 19.051364, lat: 43.100639, speed: 12.33)
+            
+            var id = UUID()
+            
+            var model = UserAdventureModel(
+                id: id, createdAt: Date(),
+                name: "test",
+                category: "car",
+                coverImage: d,
+                text: "test",
+                photos: [d,d,d],
+                data: [d1, d2]
+            )
+            
+            AuthUserAPI.createOrUpdateAdventure(model: model, completion: { apiRes, response, error in
+                guard error == nil else {
+                    
+                    XCTFail(error.debugDescription)
+                    
+                    return
+                }
+                
+                expectation.fulfill()
+                
+                // let str = String(decoding: apiRes!, as: UTF8.self)
+                
+                let str1 = try! JSONDecoder().decode(String.self, from: apiRes!)
+                
+                res = UUID(uuidString: str1) == id
+            })
+        }
+        
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
 
         XCTAssertEqual(res, true)
     }

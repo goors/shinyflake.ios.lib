@@ -246,4 +246,103 @@ open class AuthUserAPI {
 
         return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
+    
+    
+    /**
+
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    @discardableResult
+    open class func getAdventureIds(apiResponseQueue: DispatchQueue = OpenAPIClientAPI.apiResponseQueue, completion: @escaping ((_ data: [String]?, _ error: Error?) -> Void)) -> RequestTask {
+        return getAdventureIdsWithRequestBuilder().execute(apiResponseQueue) { result in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+    }
+
+    /**
+     - GET /api/v2.0/AuthUser/Profile
+     - API Key:
+       - type: apiKey Authorization (HEADER)
+       - name: JWT token
+     - returns: RequestBuilder<UserProfileModel>
+     */
+    open class func getAdventureIdsWithRequestBuilder() -> RequestBuilder<[String]> {
+        let localVariablePath = "/api/v2.0/AuthUser/Adventures/Ids"
+        let localVariableURLString = OpenAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<[String]>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+    
+    
+    
+    open class func createOrUpdateAdventure(
+        model: UserAdventureModel,
+        completion: @escaping (Data?, URLResponse?, Any?) -> Void
+    ) {
+        
+        createOrUpdateAdventureWithRequestBuilder(model: model, completionHandler: completion)
+            
+    }
+
+       
+    open class func createOrUpdateAdventureWithRequestBuilder(
+        model: UserAdventureModel,
+        
+        completionHandler: @escaping (Data?, URLResponse?, Any?) -> Void)
+    {
+        
+        let localVariablePath = "/api/v2.0/AuthUser/Adventures"
+        let request = MultipartFormDataRequest(url: URL(string: OpenAPIClientAPI.basePath + localVariablePath)!, headers: OpenAPIClientAPI.customHeaders["Authorization"])
+        
+        if(model.coverImage != nil) {
+            request.addDataField(fieldName: "CoverImage", fileName: "profile.jpeg", data: model.coverImage!, mimeType: "image/jpeg")
+        }
+        
+        if(model.photos != nil) {
+            for item in model.photos! {
+                request.addDataField(fieldName: "Photos", fileName: "profile.jpeg", data: item, mimeType: "image/jpeg")
+            }
+        }
+        
+        request.addTextField(named: "CreatedAt", value: model.createdAt.description)
+        
+        if(model.name != nil) {
+            request.addTextField(named: "Name", value: model.name!)
+        }
+        
+        if(model.text != nil) {
+            request.addTextField(named: "Name", value: model.text!)
+        }
+        
+        let jsonData = try! JSONEncoder().encode(model.data)
+        let jsonString = String(data: jsonData, encoding: .utf8)!
+        
+        request.addTextField(named: "Data", value: jsonString)
+        
+        if(model.category != nil) {
+            request.addTextField(named: "Category", value: model.category!)
+        }
+        
+        request.addTextField(named: "Id", value: model.id.uuidString)
+            
+        URLSession.shared.dataTask(with: request, completionHandler: completionHandler).resume()
+            
+    }
 }
