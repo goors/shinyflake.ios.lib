@@ -19,8 +19,8 @@ public struct UserAdventureModel: Codable, JSONEncodable, Hashable {
     public var subTitle: String?
     public var category: String?
     public var text: String?
-    public var coverImage: Data?
-    public var photos: [Data]?
+    public var coverImage: [String: Data]?
+    public var photos: [String: Data]?
     public var data: [UserAdventureModelData]
     public var level: UserAdventureLevel?
     
@@ -30,9 +30,9 @@ public struct UserAdventureModel: Codable, JSONEncodable, Hashable {
         name: String? = nil,
         subTitle: String? = nil,
         category: String? = nil,
-        coverImage: Data? = nil,
+        coverImage: [String: Data]? = nil,
         text: String? = nil,
-        photos: [Data]? = nil,
+        photos: [String : Data]? = nil,
         level: UserAdventureLevel? = nil,
         data: [UserAdventureModelData]
     ) {

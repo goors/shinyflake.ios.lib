@@ -312,12 +312,14 @@ open class AuthUserAPI {
         let request = MultipartFormDataRequest(url: URL(string: OpenAPIClientAPI.basePath + localVariablePath)!, headers: OpenAPIClientAPI.customHeaders["Authorization"])
         
         if(model.coverImage != nil) {
-            request.addDataField(fieldName: "CoverImage", fileName: "profile.jpeg", data: model.coverImage!, mimeType: "image/jpeg")
+            for item in model.coverImage! {
+                request.addDataField(fieldName: "CoverImage", fileName: item.key, data: item.value, mimeType: "image/jpeg")
+            }
         }
         
         if(model.photos != nil) {
             for item in model.photos! {
-                request.addDataField(fieldName: "Photos", fileName: "profile.jpeg", data: item, mimeType: "image/jpeg")
+                request.addDataField(fieldName: "Photos", fileName: item.key, data: item.value, mimeType: "image/jpeg")
             }
         }
         

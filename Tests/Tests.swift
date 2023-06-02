@@ -403,7 +403,7 @@ final class ShinyFlakeTests: XCTestCase {
         
         
         
-        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "sofija2501")) { data, error in
+        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "")) { data, error in
             
             let jsonData = data?.stringValue.data(using: .utf8)!
             let blogPost: String = try! JSONDecoder().decode(String.self, from: jsonData!)
@@ -440,7 +440,7 @@ final class ShinyFlakeTests: XCTestCase {
         let image = URL(fileURLWithPath: "/Users/nikola/projects/shinyflake/shinyflake.ios.lib/Tests/1517252093703.jpeg")
         let d = try Data(contentsOf: image)
         
-        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "sofija2501")) { data, error in
+        AuthAPI.authAuthenticate(userOtpCredential: UserOtpCredential(email: "nikola@pregmatch.org", password: "")) { data, error in
             
             let jsonData = data?.stringValue.data(using: .utf8)!
             let blogPost: String = try! JSONDecoder().decode(String.self, from: jsonData!)
@@ -456,9 +456,9 @@ final class ShinyFlakeTests: XCTestCase {
                 id: id, createdAt: Date(),
                 name: "test",
                 category: "car",
-                coverImage: d,
+                coverImage: ["1": d],
                 text: "test",
-                photos: [d,d,d],
+                photos: ["2" : d, "3": d, "4" : d],
                 data: [d1, d2]
             )
             
