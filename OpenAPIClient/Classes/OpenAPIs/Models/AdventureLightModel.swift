@@ -27,8 +27,9 @@ public struct AdventureLightModel: Codable, JSONEncodable, Hashable {
     public var altitudes: [Double]?
     public var start: [Double]?
     public var commentsAllowed: Bool
+    public var activityRecords: [ActivityRecord]?
 
-    public init(id: String, createdAt: Date, updatedAt: Date? = nil, title: String, subTitle: String, text: String? = nil, coverPhoto: String, photos: [BlogPostPhoto]? = nil, videos: [String]? = nil, trekk: String?, altitudes: [Double]?, start: [Double]?, commentsAllowed: Bool, category: String? = nil, level: UserAdventureLevel? = nil) {
+    public init(id: String, createdAt: Date, updatedAt: Date? = nil, title: String, subTitle: String, text: String? = nil, coverPhoto: String, photos: [BlogPostPhoto]? = nil, videos: [String]? = nil, trekk: String?, altitudes: [Double]?, start: [Double]?, commentsAllowed: Bool, category: String? = nil, level: UserAdventureLevel? = nil, activityRecords: [ActivityRecord]? = nil) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -44,6 +45,7 @@ public struct AdventureLightModel: Codable, JSONEncodable, Hashable {
         self.start = start
         self.category = category
         self.level = level
+        self.activityRecords = activityRecords
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -62,6 +64,7 @@ public struct AdventureLightModel: Codable, JSONEncodable, Hashable {
         case altitudes
         case start
         case level
+        case activityRecords
     }
 
     // Encodable protocol methods
@@ -83,6 +86,7 @@ public struct AdventureLightModel: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(commentsAllowed, forKey: .commentsAllowed)
         try container.encodeIfPresent(altitudes, forKey: .altitudes)
         try container.encodeIfPresent(start, forKey: .start)
+        try container.encodeIfPresent(activityRecords, forKey: .activityRecords)
     }
 }
 

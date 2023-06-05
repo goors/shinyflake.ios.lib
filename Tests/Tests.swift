@@ -166,7 +166,7 @@ final class ShinyFlakeTests: XCTestCase {
 
             expectation.fulfill()
             
-            res = (data!.count == 3)
+            res = (data!.count == 5)
             
            
         }
