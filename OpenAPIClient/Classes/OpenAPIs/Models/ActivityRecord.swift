@@ -30,7 +30,7 @@ public struct ActivityRecord: Codable, JSONEncodable, Hashable {
         distance: Double? = nil,
         poi: String? = nil,
         elevation: Double? = nil,
-        dateTime: Date? = nil
+        dateTime: Date? = nil,
         duration: Double
         
     ) {
