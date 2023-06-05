@@ -21,6 +21,7 @@ public struct ActivityRecord: Codable, JSONEncodable, Hashable {
     public var elevation: Double?
     public var dateTime: Date?
     public var duration: Double
+    public var speed: Double?
     
     
     public init(
@@ -31,7 +32,8 @@ public struct ActivityRecord: Codable, JSONEncodable, Hashable {
         poi: String? = nil,
         elevation: Double? = nil,
         dateTime: Date? = nil,
-        duration: Double
+        duration: Double,
+        speed: Double? = nil
         
     ) {
         self.id = id
@@ -42,6 +44,7 @@ public struct ActivityRecord: Codable, JSONEncodable, Hashable {
         self.elevation = elevation
         self.dateTime = dateTime
         self.duration = duration
+        self.speed = speed
         
         
     }
@@ -55,6 +58,7 @@ public struct ActivityRecord: Codable, JSONEncodable, Hashable {
         case elevation
         case dateTime
         case duration
+        case speed
         
         
     }
@@ -71,6 +75,7 @@ public struct ActivityRecord: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(elevation, forKey: .elevation)
         try container.encodeIfPresent(dateTime, forKey: .dateTime)
         try container.encodeIfPresent(duration, forKey: .duration)
+        try container.encodeIfPresent(speed, forKey: .speed)
         
         
     }
