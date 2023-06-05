@@ -20,7 +20,7 @@ public struct ActivityRecord: Codable, JSONEncodable, Hashable {
     public var poi: String?
     public var elevation: Double?
     public var dateTime: Date?
-    public var duration: Double
+    public var duration: Double?
     public var speed: Double?
     
     
@@ -32,7 +32,7 @@ public struct ActivityRecord: Codable, JSONEncodable, Hashable {
         poi: String? = nil,
         elevation: Double? = nil,
         dateTime: Date? = nil,
-        duration: Double,
+        duration: Double? = nil,
         speed: Double? = nil
         
     ) {
