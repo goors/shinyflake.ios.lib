@@ -23,9 +23,15 @@ public struct UserProfileActivity: Codable, JSONEncodable, Hashable {
     public var country: String?
     public var city: String?
     public var activitiesNumber: Int?
-    public var profile: UserProfileActivityAllOfProfile?
+    
+    
+    public var firstName: String?
+    public var lastName: String?
+    public var title: String?
+    public var photoId: String?
+    
 
-    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, totalDistance: Double? = nil, maxSpeed: Double? = nil, minSpeed: Double? = nil, maxAltitude: Double? = nil, minAltitude: Double? = nil, country: String? = nil, city: String? = nil, activitiesNumber: Int? = nil, profile: UserProfileActivityAllOfProfile? = nil) {
+    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, totalDistance: Double? = nil, maxSpeed: Double? = nil, minSpeed: Double? = nil, maxAltitude: Double? = nil, minAltitude: Double? = nil, country: String? = nil, city: String? = nil, activitiesNumber: Int? = nil, firstName: String? = nil, lastName: String? = nil, title: String? = nil, photoId: String? = nil) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -37,7 +43,10 @@ public struct UserProfileActivity: Codable, JSONEncodable, Hashable {
         self.country = country
         self.city = city
         self.activitiesNumber = activitiesNumber
-        self.profile = profile
+        self.firstName = firstName
+        self.lastName = lastName
+        self.title = title
+        self.photoId = photoId
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -52,7 +61,10 @@ public struct UserProfileActivity: Codable, JSONEncodable, Hashable {
         case country
         case city
         case activitiesNumber
-        case profile
+        case firstName
+        case lastName
+        case title
+        case photoId
     }
 
     // Encodable protocol methods
@@ -70,7 +82,10 @@ public struct UserProfileActivity: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(country, forKey: .country)
         try container.encodeIfPresent(city, forKey: .city)
         try container.encodeIfPresent(activitiesNumber, forKey: .activitiesNumber)
-        try container.encodeIfPresent(profile, forKey: .profile)
+        try container.encodeIfPresent(firstName, forKey: .firstName)
+        try container.encodeIfPresent(lastName, forKey: .lastName)
+        try container.encodeIfPresent(title, forKey: .title)
+        try container.encodeIfPresent(photoId, forKey: .photoId)
     }
 }
 
