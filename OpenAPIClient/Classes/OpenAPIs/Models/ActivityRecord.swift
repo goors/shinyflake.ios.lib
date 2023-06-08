@@ -17,7 +17,7 @@ public struct ActivityRecord: Codable, JSONEncodable, Hashable {
     public var lng: Double
     public var lat: Double
     public var distance: Double?
-    public var poi: String?
+    public var poi: ActivityRecordPoi?
     public var elevation: Double?
     public var dateTime: Date?
     public var duration: Double?
@@ -29,7 +29,7 @@ public struct ActivityRecord: Codable, JSONEncodable, Hashable {
         lng: Double,
         lat: Double,
         distance: Double? = nil,
-        poi: String? = nil,
+        poi: ActivityRecordPoi? = nil,
         elevation: Double? = nil,
         dateTime: Date? = nil,
         duration: Double? = nil,
@@ -76,6 +76,72 @@ public struct ActivityRecord: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(dateTime, forKey: .dateTime)
         try container.encodeIfPresent(duration, forKey: .duration)
         try container.encodeIfPresent(speed, forKey: .speed)
+        
+        
+    }
+}
+public enum ActivityRecordPoiType: Int, Codable, CaseIterable {
+    case Info = 0
+    case Warning = 1
+    case Danger = 2
+}
+
+public struct ActivityRecordPoi: Codable, JSONEncodable, Hashable {
+    
+    public var id: UUID
+    
+    public var type: ActivityRecordPoiType
+    public var text: String?
+    public var title: String
+    public var recording: String?
+    public var photos: [String]?
+   
+    
+    
+    public init(
+        id: UUID,
+        type: ActivityRecordPoiType,
+        text: String? = nil,
+        title: String,
+        recording: String?,
+        photos: [String]? = nil
+        
+        
+    ) {
+        self.id = id
+        self.type = type
+        self.text = text
+        self.title = title
+        self.recording = recording
+        self.photos = photos
+        
+        
+        
+    }
+
+    public enum CodingKeys: String, CodingKey, CaseIterable {
+        case id
+        case type
+        case text
+        case title
+        case recording
+        case photos
+        
+        
+        
+    }
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(type, forKey: .type)
+        try container.encodeIfPresent(text, forKey: .text)
+        try container.encodeIfPresent(title, forKey: .title)
+        try container.encodeIfPresent(recording, forKey: .recording)
+        try container.encodeIfPresent(photos, forKey: .photos)
+        
         
         
     }
