@@ -151,7 +151,7 @@ final class ShinyFlakeTests: XCTestCase {
     
     func testFindAdventures() throws {
         
-        OpenAPIClientAPI.basePath = "http://localhost:5000"
+        OpenAPIClientAPI.basePath = "https://dev-api.shinyflake.me"
         let expectation = self.expectation(description: "Scaling")
         var res: Bool?
         

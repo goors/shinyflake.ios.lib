@@ -17,7 +17,7 @@ public struct AdventuresLightModel: Codable, JSONEncodable, Hashable {
     public var updatedAt: Date?
     public var title: String?
     public var subTitle: String?
-    public var level: AdventuresLightModelAllOfLevel?
+    public var level: UserAdventureLevel?
     public var rawData: String?
     public var text: String?
     public var coverPhoto: String?
@@ -33,7 +33,7 @@ public struct AdventuresLightModel: Codable, JSONEncodable, Hashable {
     public var isPublished: Bool?
     public var userProfile: AdventuresLightModelAllOfUserProfile?
 
-    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, title: String? = nil, subTitle: String? = nil, level: AdventuresLightModelAllOfLevel? = nil, rawData: String? = nil, text: String? = nil, coverPhoto: String? = nil, category: String? = nil, photos: [BlogPostPhoto]? = nil, videos: [String]? = nil, trekk: AnyCodable? = nil, altitudes: [Double]? = nil, activityRecords: [ActivityRecord]? = nil, start: [Double]? = nil, slug: String? = nil, commentsAllowed: Bool? = nil, isPublished: Bool? = nil, userProfile: AdventuresLightModelAllOfUserProfile? = nil) {
+    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, title: String? = nil, subTitle: String? = nil, level: UserAdventureLevel? = nil, rawData: String? = nil, text: String? = nil, coverPhoto: String? = nil, category: String? = nil, photos: [BlogPostPhoto]? = nil, videos: [String]? = nil, trekk: AnyCodable? = nil, altitudes: [Double]? = nil, activityRecords: [ActivityRecord]? = nil, start: [Double]? = nil, slug: String? = nil, commentsAllowed: Bool? = nil, isPublished: Bool? = nil, userProfile: AdventuresLightModelAllOfUserProfile? = nil) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
