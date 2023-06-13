@@ -31,9 +31,10 @@ public struct AdventuresLightModel: Codable, JSONEncodable, Hashable {
     public var slug: String?
     public var commentsAllowed: Bool?
     public var isPublished: Bool?
+    public var isRecommended: Bool?
     public var userProfile: AdventuresLightModelAllOfUserProfile?
 
-    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, title: String? = nil, subTitle: String? = nil, level: UserAdventureLevel? = nil, rawData: String? = nil, text: String? = nil, coverPhoto: String? = nil, category: String? = nil, photos: [BlogPostPhoto]? = nil, videos: [String]? = nil, trekk: AnyCodable? = nil, altitudes: [Double]? = nil, activityRecords: [ActivityRecord]? = nil, start: [Double]? = nil, slug: String? = nil, commentsAllowed: Bool? = nil, isPublished: Bool? = nil, userProfile: AdventuresLightModelAllOfUserProfile? = nil) {
+    public init(id: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, title: String? = nil, subTitle: String? = nil, level: UserAdventureLevel? = nil, rawData: String? = nil, text: String? = nil, coverPhoto: String? = nil, category: String? = nil, photos: [BlogPostPhoto]? = nil, videos: [String]? = nil, trekk: AnyCodable? = nil, altitudes: [Double]? = nil, activityRecords: [ActivityRecord]? = nil, start: [Double]? = nil, slug: String? = nil, commentsAllowed: Bool? = nil, isPublished: Bool? = nil, userProfile: AdventuresLightModelAllOfUserProfile? = nil, isRecommended: Bool? = nil) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -54,6 +55,7 @@ public struct AdventuresLightModel: Codable, JSONEncodable, Hashable {
         self.commentsAllowed = commentsAllowed
         self.isPublished = isPublished
         self.userProfile = userProfile
+        self.isRecommended = isRecommended
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -77,6 +79,7 @@ public struct AdventuresLightModel: Codable, JSONEncodable, Hashable {
         case commentsAllowed
         case isPublished
         case userProfile
+        case isRecommended
     }
 
     // Encodable protocol methods
@@ -103,6 +106,7 @@ public struct AdventuresLightModel: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(commentsAllowed, forKey: .commentsAllowed)
         try container.encodeIfPresent(isPublished, forKey: .isPublished)
         try container.encodeIfPresent(userProfile, forKey: .userProfile)
+        try container.encodeIfPresent(isRecommended, forKey: .isRecommended)
     }
 }
 
